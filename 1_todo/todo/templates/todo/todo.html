@@ -1,0 +1,37 @@
+<ul>
+    <form action='add_item' method='post'>
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="add">
+    </form>
+    <table style="width:100%">
+        <tr>
+            <td style="width: 5%;">Id</td>
+            <td style="width: 10%;">Status</td>
+            <td style="width: 10%;">Action</td>
+            <td style="width: 75%;">Tasks</td>
+        </tr>
+    {% for q in todo_list %}
+        <tr>
+            <td>{{q.id}}  </td>
+            <td>{{q.complete}} </td>
+            {% if q.complete == 'todo' %}
+            <td>
+            <form action='complete/{{q.id}}' method='post'>
+                {% csrf_token %}
+                <input type="submit" value="done">
+            </form>
+            </td>
+            {%else%}
+            <td>
+            <form action='delete/{{q.id}}' method='post'>
+                {% csrf_token %}
+                <input type="submit" value="delete">
+            </form>
+            </td>
+            {%endif%}
+            <td>{{q.item}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</ul>
